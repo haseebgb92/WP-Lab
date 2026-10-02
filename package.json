@@ -1,0 +1,66 @@
+{
+  "name": "wp-lab",
+  "version": "0.8.0",
+  "description": "Disposable WordPress and WooCommerce testing lab",
+  "main": "electron-main.js",
+  "private": true,
+  "author": {
+    "name": "Advertpreneur",
+    "email": "wp-lab@advertpreneur.local"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "app": "electron .",
+    "build:linux": "electron-builder --linux deb"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "multer": "^2.0.2"
+  },
+  "devDependencies": {
+    "electron": "^38.1.2",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "com.advertpreneur.wplab",
+    "productName": "WP Lab",
+    "artifactName": "WP-Lab-${version}-${arch}.${ext}",
+    "files": [
+      "electron-main.js",
+      "server.js",
+      "public/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "templates",
+        "to": "wp-lab-resources/templates"
+      },
+      {
+        "from": "scripts",
+        "to": "wp-lab-resources/scripts"
+      },
+      {
+        "from": "wp-lab-helper",
+        "to": "wp-lab-resources/wp-lab-helper"
+      },
+      {
+        "from": "vendor",
+        "to": "wp-lab-resources/vendor"
+      }
+    ],
+    "linux": {
+      "target": [
+        "deb"
+      ],
+      "category": "Development",
+      "maintainer": "Advertpreneur <wp-lab@advertpreneur.local>",
+      "icon": "build/icon.png",
+      "syncDesktopName": true
+    }
+  },
+  "homepage": "https://advertpreneur.com",
+  "desktopName": "wp-lab"
+}

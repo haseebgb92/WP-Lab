@@ -1,0 +1,37 @@
+services:
+  db:
+    image: mariadb:11.4
+    environment: {MARIADB_DATABASE: wordpress, MARIADB_USER: wordpress, MARIADB_PASSWORD: wordpress, MARIADB_ROOT_PASSWORD: root}
+    volumes: [db:/var/lib/mysql]
+  wordpress:
+    image: wordpress:php8.3-apache
+    ports: ["8085:80"]
+    environment: {WORDPRESS_DB_HOST: db:3306, WORDPRESS_DB_USER: wordpress, WORDPRESS_DB_PASSWORD: wordpress, WORDPRESS_DB_NAME: wordpress, WORDPRESS_DEBUG: "1"}
+    volumes:
+      - wp:/var/www/html
+      - ./wp-lab-helper:/var/www/html/wp-content/plugins/wp-lab-helper
+      - ../../uploads:/lab-uploads
+    depends_on: [db]
+  wpcli:
+    image: wordpress:cli-php8.3
+    user: "33:33"
+    environment: {WORDPRESS_DB_HOST: db:3306, WORDPRESS_DB_USER: wordpress, WORDPRESS_DB_PASSWORD: wordpress, WORDPRESS_DB_NAME: wordpress}
+    volumes:
+      - wp:/var/www/html
+      - ./wp-lab-helper:/var/www/html/wp-content/plugins/wp-lab-helper
+      - ../../uploads:/lab-uploads
+    depends_on: [db,wordpress]
+    entrypoint: ["tail","-f","/dev/null"]
+  scheduler:
+    image: wordpress:cli-php8.3
+    user: "33:33"
+    environment: {WORDPRESS_DB_HOST: db:3306, WORDPRESS_DB_USER: wordpress, WORDPRESS_DB_PASSWORD: wordpress, WORDPRESS_DB_NAME: wordpress}
+    volumes:
+      - wp:/var/www/html
+      - ./wp-lab-helper:/var/www/html/wp-content/plugins/wp-lab-helper
+      - ../../uploads:/lab-uploads
+    depends_on: [db,wordpress]
+    entrypoint: ["/bin/sh","-c"]
+    command: ["while true; do wp cron event run --due-now >/dev/null 2>&1 || true; wp action-scheduler run --batch-size=50 --batches=1 >/dev/null 2>&1 || true; sleep 30; done"]
+    restart: unless-stopped
+volumes: {db: {}, wp: {}}
