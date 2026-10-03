@@ -14,6 +14,12 @@
   <strong>Current version: 0.8.0</strong> · Linux desktop app · Docker Compose · WordPress · WooCommerce
 </p>
 
+<p align="center">
+  <a href="https://haseebgb92.github.io/WP-Lab/">Website</a> ·
+  <a href="https://github.com/haseebgb92/WP-Lab/releases/tag/v0.8.0">Download v0.8.0</a> ·
+  <a href="https://github.com/haseebgb92/WP-Lab/issues">Issues</a>
+</p>
+
 ![WP Lab local WordPress development dashboard](docs/images/wp-lab-dashboard.png)
 
 ## What is WP Lab?
