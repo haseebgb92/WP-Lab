@@ -1,125 +1,280 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>WP Lab — Local WordPress Development Environment for Linux</title>
-  <meta name="description" content="WP Lab is a Docker-powered local WordPress and WooCommerce development environment for Linux with multiple sandboxes, PHP switching, Mailpit, logs, previews and client links.">
-  <meta name="keywords" content="local WordPress development environment, WordPress Docker, WordPress sandbox, WooCommerce testing environment, WordPress Linux, PHP testing WordPress">
-  <meta name="robots" content="index,follow,max-image-preview:large">
-  <link rel="canonical" href="https://haseebgb92.github.io/WP-Lab/">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="WP Lab — Local WordPress Development Environment for Linux">
-  <meta property="og:description" content="Run multiple isolated WordPress and WooCommerce Docker sandboxes on Linux with PHP switching, local email testing, logs, live previews and temporary client links.">
-  <meta property="og:url" content="https://haseebgb92.github.io/WP-Lab/">
-  <meta property="og:image" content="https://raw.githubusercontent.com/haseebgb92/WP-Lab/main/docs/images/wp-lab-dashboard.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="WP Lab — Local WordPress Development Environment for Linux">
-  <meta name="twitter:description" content="Docker-powered local WordPress and WooCommerce testing sandboxes for Linux.">
-  <meta name="twitter:image" content="https://raw.githubusercontent.com/haseebgb92/WP-Lab/main/docs/images/wp-lab-dashboard.png">
-  <style>
-    :root{--bg:#f7f8fa;--panel:#fff;--text:#111827;--muted:#667085;--border:#e4e7ec;--accent:#111827}
-    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-    a{color:inherit}.wrap{width:min(1120px,calc(100% - 32px));margin:auto}
-    header{padding:22px 0;border-bottom:1px solid var(--border);background:rgba(255,255,255,.92);position:sticky;top:0;backdrop-filter:blur(10px);z-index:2}
-    nav{display:flex;align-items:center;justify-content:space-between;gap:16px}.brand{font-weight:850}.navlinks{display:flex;gap:18px;font-size:14px;color:var(--muted)}
-    .hero{padding:78px 0 48px;text-align:center}.eyebrow{font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-    h1{font-size:clamp(38px,7vw,68px);line-height:1.04;letter-spacing:-.045em;margin:14px auto 20px;max-width:920px}
-    .lead{max-width:800px;margin:0 auto;color:var(--muted);font-size:20px}.actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:28px}
-    .btn{display:inline-block;padding:12px 18px;border-radius:10px;text-decoration:none;font-weight:800;border:1px solid var(--border);background:#fff}.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
-    .shot{margin:42px auto 0;display:block;width:100%;border:1px solid var(--border);border-radius:18px;box-shadow:0 24px 60px rgba(16,24,40,.12)}
-    section{padding:56px 0}h2{font-size:34px;line-height:1.15;letter-spacing:-.025em;margin:0 0 14px}.section-lead{color:var(--muted);max-width:760px;margin:0 0 28px}
-    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.card{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:22px}.card h3{margin:0 0 8px;font-size:18px}.card p{margin:0;color:var(--muted)}
-    .two{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center}.two img{width:100%;border:1px solid var(--border);border-radius:16px}
-    .faq details{background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:10px 0}.faq summary{font-weight:800;cursor:pointer}.faq p{color:var(--muted);margin-bottom:0}
-    pre{background:#0d1117;color:#e6edf3;border-radius:14px;padding:18px;overflow:auto}footer{padding:36px 0 60px;color:var(--muted);border-top:1px solid var(--border);margin-top:40px}
-    @media(max-width:820px){.grid{grid-template-columns:1fr}.two{grid-template-columns:1fr}.navlinks{display:none}.hero{padding-top:52px}}
-  </style>
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"SoftwareApplication",
-    "name":"WP Lab",
-    "applicationCategory":"DeveloperApplication",
-    "operatingSystem":"Linux",
-    "softwareVersion":"0.8.0",
-    "description":"Docker-powered local WordPress and WooCommerce development environment for Linux with multiple isolated sandboxes, PHP switching, Mailpit email testing, logs, previews and temporary client links.",
-    "url":"https://haseebgb92.github.io/WP-Lab/",
-    "downloadUrl":"https://github.com/haseebgb92/WP-Lab/releases/tag/v0.8.0",
-    "codeRepository":"https://github.com/haseebgb92/WP-Lab",
-    "author":{"@type":"Organization","name":"Advertpreneur"}
-  }
-  </script>
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"FAQPage",
-    "mainEntity":[
-      {"@type":"Question","name":"What is WP Lab?","acceptedAnswer":{"@type":"Answer","text":"WP Lab is a local WordPress and WooCommerce development environment for Linux that manages isolated Docker sandboxes from a desktop interface."}},
-      {"@type":"Question","name":"Can WP Lab run multiple local WordPress sites?","acceptedAnswer":{"@type":"Answer","text":"Yes. WP Lab can run multiple isolated WordPress instances side-by-side with separate data, ports, email inboxes, logs and PHP configuration."}},
-      {"@type":"Question","name":"Can I test WordPress on different PHP versions?","acceptedAnswer":{"@type":"Answer","text":"Yes. WP Lab supports switching an existing sandbox between PHP 8.2, 8.3 and 8.4 while preserving WordPress data."}},
-      {"@type":"Question","name":"Can WP Lab be used for WooCommerce development?","acceptedAnswer":{"@type":"Answer","text":"Yes. WP Lab supports WooCommerce testing with demo products and orders, local email capture, test shipping and a dummy payment gateway for multiple order states."}},
-      {"@type":"Question","name":"Does WP Lab work on Ubuntu and Linux Mint?","acceptedAnswer":{"@type":"Answer","text":"WP Lab is Linux-focused and is developed around Ubuntu and Linux Mint style systems with Docker Engine and Docker Compose."}}
-    ]
-  }
-  </script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WP Lab — Local WordPress Development Environment for Linux</title>
+<meta name="description" content="WP Lab is a Docker-powered local WordPress and WooCommerce development environment for Linux with multiple sandboxes, PHP switching, Mailpit, logs, previews and client links.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://haseebgb92.github.io/WP-Lab/">
+<link rel="icon" type="image/png" href="images/wp-lab-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="WP Lab — Local WordPress Development Environment for Linux">
+<meta property="og:description" content="Run isolated WordPress and WooCommerce sandboxes on Linux with PHP switching, local email testing, logs, live previews and temporary client links.">
+<meta property="og:url" content="https://haseebgb92.github.io/WP-Lab/">
+<meta property="og:image" content="https://raw.githubusercontent.com/haseebgb92/WP-Lab/main/docs/images/wp-lab-dashboard.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="WP Lab — Local WordPress Development Environment for Linux">
+<meta name="twitter:description" content="Docker-powered WordPress and WooCommerce testing sandboxes for Linux.">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/haseebgb92/WP-Lab/main/docs/images/wp-lab-dashboard.png">
+<style>
+:root{
+  --ink:#111318;--muted:#6d7480;--soft:#f7f8fa;--line:#e7e9ee;--white:#fff;
+  --shadow:0 24px 80px rgba(17,19,24,.08);--shadow2:0 12px 36px rgba(17,19,24,.06);
+  --radius:22px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--white);color:var(--ink);font:16px/1.6 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+img{max-width:100%;display:block}
+.shell{width:min(1180px,calc(100% - 36px));margin:auto}
+.topbar{position:sticky;top:0;z-index:20;border-bottom:1px solid rgba(231,233,238,.9);background:rgba(255,255,255,.86);backdrop-filter:blur(18px)}
+.nav{height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{display:flex;align-items:center;gap:11px;text-decoration:none;font-weight:850;letter-spacing:-.02em}
+.brand img{width:34px;height:34px;border-radius:10px}
+.navlinks{display:flex;align-items:center;gap:24px;color:var(--muted);font-size:14px}
+.navlinks a{text-decoration:none}.navlinks a:hover{color:var(--ink)}
+.navcta{display:flex;gap:10px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:44px;padding:0 17px;border-radius:12px;border:1px solid var(--line);background:var(--white);font-weight:800;font-size:14px;text-decoration:none;transition:.18s ease}
+.btn:hover{transform:translateY(-1px);box-shadow:var(--shadow2)}
+.btn.dark{background:var(--ink);color:#fff;border-color:var(--ink)}
+.hero{padding:92px 0 42px;text-align:center}
+.kicker{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--line);border-radius:999px;background:#fbfbfc;color:#525864;font-size:12px;font-weight:800;letter-spacing:.02em}
+.kicker:before{content:"";width:7px;height:7px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 5px rgba(34,197,94,.10)}
+h1{max-width:980px;margin:22px auto 22px;font-size:clamp(48px,7.5vw,86px);line-height:.98;letter-spacing:-.065em;font-weight:880}
+.hero p{max-width:790px;margin:0 auto;color:var(--muted);font-size:20px;line-height:1.6}
+.hero-actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:30px 0 0}
+.meta-row{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin-top:20px;color:#858b94;font-size:13px}
+.stage{padding:28px 0 78px}
+.window{position:relative;border:1px solid var(--line);border-radius:28px;background:#f4f5f7;padding:14px;box-shadow:0 34px 100px rgba(17,19,24,.12)}
+.windowbar{height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 8px 0 4px}
+.dots{display:flex;gap:7px}.dots i{width:9px;height:9px;border-radius:50%;background:#d6d9df}.windowbar span{font-size:12px;color:#7e8590;font-weight:700}
+.window img{width:100%;border-radius:18px;border:1px solid #e1e3e8;background:#fff}
+.logo-strip{display:flex;align-items:center;justify-content:center;gap:28px;flex-wrap:wrap;padding:4px 0 78px;color:#969ba4;font-size:13px;font-weight:800;letter-spacing:.04em;text-transform:uppercase}
+.logo-strip strong{color:#565c66}
+.section{padding:92px 0}
+.section.soft{background:var(--soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.section-head{display:grid;grid-template-columns:1fr .8fr;gap:50px;align-items:end;margin-bottom:42px}
+.eyebrow{text-transform:uppercase;letter-spacing:.09em;font-size:12px;font-weight:850;color:#8a9099;margin-bottom:12px}
+h2{margin:0;font-size:clamp(36px,5vw,58px);line-height:1.05;letter-spacing:-.045em}
+.section-head p{margin:0;color:var(--muted);font-size:17px}
+.feature-grid{display:grid;grid-template-columns:1.15fr .85fr .85fr;gap:16px}
+.feature{min-height:235px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:24px;display:flex;flex-direction:column;justify-content:space-between;transition:.18s ease}
+.feature:hover{transform:translateY(-2px);box-shadow:var(--shadow2)}
+.feature.big{grid-row:span 2;min-height:486px;background:var(--ink);color:#fff}
+.feature h3{margin:0 0 8px;font-size:20px;letter-spacing:-.025em}.feature.big h3{font-size:30px}
+.feature p{margin:0;color:var(--muted)}.feature.big p{color:#b8bec7}
+.icon{width:44px;height:44px;border:1px solid var(--line);border-radius:12px;display:grid;place-items:center;font-size:20px;background:#fafafa}
+.big .icon{border-color:#2d3138;background:#191c22}
+.feature-visual{margin-top:32px;border-radius:16px;overflow:hidden;border:1px solid #2a2e35;background:#0e1014}
+.feature-visual img{width:100%;opacity:.96}
+.split{display:grid;grid-template-columns:.92fr 1.08fr;gap:56px;align-items:center}
+.split-copy h2{margin-bottom:18px}.split-copy p{color:var(--muted);font-size:17px;margin:0 0 24px}
+.ticks{display:grid;gap:14px}.tick{display:flex;gap:12px;align-items:flex-start;font-weight:730}.tick b{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:#111318;color:#fff;font-size:12px;flex:0 0 22px;margin-top:2px}
+.screen-card{border:1px solid var(--line);border-radius:24px;background:#fff;padding:12px;box-shadow:var(--shadow)}
+.screen-card img{border-radius:16px}
+.compare{overflow:hidden;border:1px solid var(--line);border-radius:20px;background:#fff}
+.compare-row{display:grid;grid-template-columns:1.3fr repeat(3,1fr);border-bottom:1px solid var(--line)}
+.compare-row:last-child{border-bottom:0}.compare-row>div{padding:16px 18px;border-right:1px solid var(--line)}.compare-row>div:last-child{border-right:0}
+.compare-row.head{background:#f7f8fa;font-size:13px;font-weight:850;color:#69707b}.yes{font-weight:850}.dim{color:#8b919b}
+.install{display:grid;grid-template-columns:1fr .82fr;gap:18px;margin-top:38px}
+.codebox{border-radius:20px;background:#101216;color:#e9edf2;padding:24px;box-shadow:var(--shadow2)}
+.codebar{display:flex;align-items:center;justify-content:space-between;color:#9299a4;font-size:12px;margin-bottom:20px}
+pre{margin:0;white-space:pre-wrap;font:14px/1.7 ui-monospace,SFMono-Regular,Menlo,monospace;color:#f7f7f8}
+.download-card{border:1px solid var(--line);border-radius:20px;padding:26px;display:flex;flex-direction:column;justify-content:space-between;background:#fff}
+.download-card h3{font-size:26px;margin:0 0 8px;letter-spacing:-.03em}.download-card p{color:var(--muted);margin:0 0 22px}
+.badges{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}.badge{padding:7px 10px;border:1px solid var(--line);border-radius:999px;font-size:12px;font-weight:800;color:#666d78;background:#fafafa}
+.faq{display:grid;grid-template-columns:.72fr 1.28fr;gap:56px}.faq-list{display:grid;gap:10px}
+details{border:1px solid var(--line);border-radius:14px;background:#fff;padding:17px 18px}summary{font-weight:800;cursor:pointer}details p{color:var(--muted);margin:12px 0 0}
+.final{padding:110px 0}.finalbox{border-radius:30px;background:var(--ink);color:#fff;padding:64px;text-align:center;overflow:hidden;position:relative}
+.finalbox:before{content:"";position:absolute;width:430px;height:430px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.12),transparent 68%);top:-260px;left:50%;transform:translateX(-50%)}
+.finalbox h2{max-width:760px;margin:0 auto 16px}.finalbox p{color:#b7bec8;max-width:640px;margin:0 auto 26px;font-size:17px}.finalbox .btn{background:#fff;color:#111318;border-color:#fff}
+footer{border-top:1px solid var(--line);padding:34px 0 48px;color:#7a818c;font-size:13px}
+.footerrow{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}.footerlinks{display:flex;gap:18px}
+@media(max-width:900px){
+  .navlinks{display:none}.section-head,.split,.install,.faq{grid-template-columns:1fr}.feature-grid{grid-template-columns:1fr 1fr}.feature.big{grid-row:auto;grid-column:1/-1;min-height:auto}
+  .compare{overflow:auto}.compare-row{min-width:760px}.hero{padding-top:64px}.finalbox{padding:46px 24px}
+}
+@media(max-width:620px){
+  .shell{width:min(100% - 24px,1180px)}.navcta .btn:first-child{display:none}.feature-grid{grid-template-columns:1fr}.feature.big{grid-column:auto}
+  h1{font-size:48px}.hero p{font-size:17px}.section{padding:70px 0}.stage{padding-bottom:54px}.window{padding:8px;border-radius:20px}.window img{border-radius:13px}
+}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"SoftwareApplication","name":"WP Lab","applicationCategory":"DeveloperApplication","operatingSystem":"Linux","softwareVersion":"0.8.0","description":"Docker-powered local WordPress and WooCommerce development environment for Linux with multiple isolated sandboxes, PHP switching, Mailpit email testing, logs, previews and temporary client links.","url":"https://haseebgb92.github.io/WP-Lab/","downloadUrl":"https://github.com/haseebgb92/WP-Lab/releases/tag/v0.8.0","codeRepository":"https://github.com/haseebgb92/WP-Lab","author":{"@type":"Organization","name":"Advertpreneur"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"What is WP Lab?","acceptedAnswer":{"@type":"Answer","text":"WP Lab is a local WordPress and WooCommerce development environment for Linux that manages isolated Docker sandboxes from a desktop interface."}},
+{"@type":"Question","name":"Can WP Lab run multiple local WordPress sites?","acceptedAnswer":{"@type":"Answer","text":"Yes. WP Lab can run multiple isolated WordPress instances side-by-side with separate data, ports, email inboxes, logs and PHP configuration."}},
+{"@type":"Question","name":"Can I test WordPress on different PHP versions?","acceptedAnswer":{"@type":"Answer","text":"Yes. WP Lab supports switching an existing sandbox between PHP 8.2, 8.3 and 8.4 while preserving WordPress data."}},
+{"@type":"Question","name":"Can WP Lab be used for WooCommerce development?","acceptedAnswer":{"@type":"Answer","text":"Yes. WP Lab supports WooCommerce testing with demo products and orders, local email capture, test shipping and a dummy payment gateway for multiple order states."}},
+{"@type":"Question","name":"Does WP Lab work on Ubuntu and Linux Mint?","acceptedAnswer":{"@type":"Answer","text":"WP Lab is Linux-focused and is developed around Ubuntu and Linux Mint style systems with Docker Engine and Docker Compose."}}
+]}
+</script>
 </head>
 <body>
-<header><div class="wrap"><nav><div class="brand">WP Lab</div><div class="navlinks"><a href="#features">Features</a><a href="#wordpress-linux">WordPress on Linux</a><a href="#faq">FAQ</a><a href="https://github.com/haseebgb92/WP-Lab">GitHub</a></div></nav></div></header>
+<header class="topbar">
+  <div class="shell nav">
+    <a class="brand" href="#"><img src="images/wp-lab-icon.png" alt="WP Lab logo">WP Lab</a>
+    <nav class="navlinks"><a href="#features">Features</a><a href="#workflow">Workflow</a><a href="#compare">Compare</a><a href="#faq">FAQ</a></nav>
+    <div class="navcta"><a class="btn" href="https://github.com/haseebgb92/WP-Lab">GitHub</a><a class="btn dark" href="https://github.com/haseebgb92/WP-Lab/releases/tag/v0.8.0">Download</a></div>
+  </div>
+</header>
 
 <main>
-  <div class="wrap hero">
-    <div class="eyebrow">Linux · Docker · WordPress · WooCommerce</div>
-    <h1>Local WordPress development without the repetitive setup</h1>
-    <p class="lead">WP Lab is a Docker-powered local WordPress development environment for Linux. Run multiple WordPress and WooCommerce sandboxes, switch PHP versions, catch email locally, inspect logs, refresh frontend snapshots and share temporary client previews.</p>
-    <div class="actions">
-      <a class="btn primary" href="https://github.com/haseebgb92/WP-Lab/releases/tag/v0.8.0">Download WP Lab v0.8.0</a>
-      <a class="btn" href="https://github.com/haseebgb92/WP-Lab">View source on GitHub</a>
+<section class="hero">
+  <div class="shell">
+    <div class="kicker">WP Lab v0.8.0 is available</div>
+    <h1>Your local WordPress lab.<br>Without the local chaos.</h1>
+    <p>Run multiple isolated WordPress and WooCommerce environments on Linux. Switch PHP versions, catch emails, inspect logs, preview sites, and share temporary client links — from one clean desktop app.</p>
+    <div class="hero-actions">
+      <a class="btn dark" href="https://github.com/haseebgb92/WP-Lab/releases/download/v0.8.0/WP-Lab-0.8.0-amd64.deb">Download .deb</a>
+      <a class="btn" href="https://github.com/haseebgb92/WP-Lab">View on GitHub</a>
     </div>
-    <img class="shot" src="images/wp-lab-dashboard.png" alt="WP Lab local WordPress development environment dashboard showing multiple Docker WordPress instances">
+    <div class="meta-row"><span>Linux</span><span>Docker Compose</span><span>WordPress</span><span>WooCommerce</span><span>PHP 8.2–8.4</span></div>
   </div>
+</section>
 
-  <section id="features"><div class="wrap">
-    <h2>A WordPress & WooCommerce testing environment built for repeat work</h2>
-    <p class="section-lead">Instead of rebuilding local stacks for every project, WP Lab keeps isolated WordPress development environments ready to create, test, reset and remove.</p>
-    <div class="grid">
-      <div class="card"><h3>Multiple WordPress sandboxes</h3><p>Run several isolated local WordPress sites side-by-side with separate files, database data and ports.</p></div>
-      <div class="card"><h3>PHP 8.2, 8.3 & 8.4 testing</h3><p>Switch PHP versions while preserving the WordPress site data for compatibility testing.</p></div>
-      <div class="card"><h3>WooCommerce development</h3><p>Test products, orders, checkout states, shipping, plugins and store customizations locally.</p></div>
-      <div class="card"><h3>Mailpit email catcher</h3><p>Capture WordPress and WooCommerce emails locally instead of sending test messages externally.</p></div>
-      <div class="card"><h3>Logs and cache controls</h3><p>Inspect WordPress, Apache, database and email logs and clear caches from the same UI.</p></div>
-      <div class="card"><h3>Temporary client previews</h3><p>Create short-lived HTTPS preview links with Cloudflare Tunnel without deploying a staging server.</p></div>
+<section class="stage">
+  <div class="shell">
+    <div class="window">
+      <div class="windowbar"><div class="dots"><i></i><i></i><i></i></div><span>WP Lab · Local WordPress environments</span><span>localhost</span></div>
+      <img src="images/wp-lab-dashboard.png" alt="WP Lab dashboard showing multiple local WordPress development environments">
     </div>
-  </div></section>
+  </div>
+</section>
 
-  <section id="wordpress-linux"><div class="wrap two">
-    <div>
-      <h2>Local WordPress development on Linux</h2>
-      <p class="section-lead">WP Lab is designed for Ubuntu and Linux Mint style environments using Docker Engine and Docker Compose. It manages the repetitive container setup while keeping normal WP Admin workflows intact.</p>
-      <p>Install themes and plugins in WordPress as usual, generate demo content, test WooCommerce behavior, change PHP versions, inspect captured mail and logs, then reset or delete the sandbox when the job is done.</p>
+<div class="shell logo-strip"><span>Built around</span><strong>WordPress</strong><strong>WooCommerce</strong><strong>Docker</strong><strong>Mailpit</strong><strong>Cloudflare</strong></div>
+
+<section class="section soft" id="features">
+  <div class="shell">
+    <div class="section-head">
+      <div><div class="eyebrow">Everything in one place</div><h2>Less setup.<br>More actual testing.</h2></div>
+      <p>WP Lab takes the repetitive pieces of local WordPress development and turns them into reusable controls you can see, understand, and reset.</p>
     </div>
-    <img src="images/wp-lab-how-it-works.png" alt="WP Lab WordPress Docker testing environment workflow on Linux">
-  </div></section>
 
-  <section><div class="wrap">
-    <h2>Run from source</h2>
-    <pre><code>git clone https://github.com/haseebgb92/WP-Lab.git
+    <div class="feature-grid">
+      <article class="feature big">
+        <div>
+          <div class="icon">▦</div>
+          <h3>Multiple isolated WordPress environments</h3>
+          <p>Keep separate client sites, theme tests, plugin experiments, and PHP configurations running side-by-side without mixing their files or databases.</p>
+        </div>
+        <div class="feature-visual"><img src="images/wp-lab-dashboard.png" alt="Multiple WordPress sandboxes in WP Lab"></div>
+      </article>
+
+      <article class="feature">
+        <div class="icon">8.4</div>
+        <div><h3>Switch PHP versions</h3><p>Move a sandbox between PHP 8.2, 8.3, and 8.4 while keeping WordPress data intact.</p></div>
+      </article>
+
+      <article class="feature">
+        <div class="icon">✉</div>
+        <div><h3>Catch every email locally</h3><p>Each instance gets its own Mailpit inbox for WordPress and WooCommerce email testing.</p></div>
+      </article>
+
+      <article class="feature">
+        <div class="icon">≡</div>
+        <div><h3>Logs where you need them</h3><p>Read WordPress, Apache, debug, database, and email logs without chasing containers.</p></div>
+      </article>
+
+      <article class="feature">
+        <div class="icon">↗</div>
+        <div><h3>Share a client preview</h3><p>Create a temporary HTTPS review link with Cloudflare Tunnel, then shut it down when finished.</p></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="workflow">
+  <div class="shell split">
+    <div class="split-copy">
+      <div class="eyebrow">Built for the real workflow</div>
+      <h2>Use WordPress normally. Let WP Lab handle the environment.</h2>
+      <p>Open WP Admin, install your theme or plugin the usual way, generate test content, switch runtime versions, inspect results, and throw the sandbox away when you're done.</p>
+      <div class="ticks">
+        <div class="tick"><b>1</b><span>Create and name an isolated sandbox.</span></div>
+        <div class="tick"><b>2</b><span>Install themes and plugins through normal WP Admin.</span></div>
+        <div class="tick"><b>3</b><span>Test WooCommerce, email, PHP compatibility, and logs.</span></div>
+        <div class="tick"><b>4</b><span>Share, reset, restart, or delete it when finished.</span></div>
+      </div>
+    </div>
+    <div class="screen-card"><img src="images/wp-lab-how-it-works.png" alt="How WP Lab manages local WordPress development"></div>
+  </div>
+</section>
+
+<section class="section soft" id="compare">
+  <div class="shell">
+    <div class="section-head">
+      <div><div class="eyebrow">The difference</div><h2>Visual where it helps.<br>Flexible where it matters.</h2></div>
+      <p>WP Lab is not trying to replace every WordPress development tool. It is for people who want reusable local environments without repeatedly rebuilding and managing them by hand.</p>
+    </div>
+    <div class="compare">
+      <div class="compare-row head"><div>Capability</div><div>WP Lab</div><div>wp-env</div><div>Manual Docker</div></div>
+      <div class="compare-row"><div>Desktop interface</div><div class="yes">Built in</div><div class="dim">CLI</div><div class="dim">No</div></div>
+      <div class="compare-row"><div>Multiple managed sites</div><div class="yes">Built in</div><div>Project-based</div><div class="dim">Manual</div></div>
+      <div class="compare-row"><div>PHP version switching</div><div class="yes">1 click</div><div>Configurable</div><div class="dim">Manual</div></div>
+      <div class="compare-row"><div>Per-site email catcher</div><div class="yes">Built in</div><div class="dim">Setup needed</div><div class="dim">Manual</div></div>
+      <div class="compare-row"><div>Logs in the interface</div><div class="yes">Built in</div><div class="dim">CLI/files</div><div class="dim">Manual</div></div>
+      <div class="compare-row"><div>Temporary client link</div><div class="yes">Built in</div><div class="dim">Manual</div><div class="dim">Manual</div></div>
+    </div>
+
+    <div class="install">
+      <div class="codebox">
+        <div class="codebar"><span>Run from source</span><span>bash</span></div>
+        <pre>git clone https://github.com/haseebgb92/WP-Lab.git
 cd WP-Lab
 npm install
-npm start</code></pre>
-    <p>Or download the latest Debian package from <a href="https://github.com/haseebgb92/WP-Lab/releases/tag/v0.8.0">GitHub Releases</a>.</p>
-  </div></section>
+npm start</pre>
+      </div>
+      <div class="download-card">
+        <div>
+          <div class="eyebrow">Linux package</div>
+          <h3>Prefer installing it?</h3>
+          <p>Grab the prebuilt Debian package and keep WP Lab in your app launcher like a normal desktop tool.</p>
+          <div class="badges"><span class="badge">v0.8.0</span><span class="badge">amd64</span><span class="badge">.deb</span></div>
+        </div>
+        <a class="btn dark" href="https://github.com/haseebgb92/WP-Lab/releases/download/v0.8.0/WP-Lab-0.8.0-amd64.deb">Download WP Lab</a>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <section class="faq" id="faq"><div class="wrap">
-    <h2>WP Lab FAQ</h2>
-    <details><summary>What is WP Lab?</summary><p>WP Lab is a local WordPress and WooCommerce development environment for Linux that manages isolated Docker sandboxes from a desktop interface.</p></details>
-    <details><summary>Can WP Lab run multiple local WordPress sites?</summary><p>Yes. Each site has separate WordPress data, database data, ports, PHP configuration, Mailpit inbox and logs.</p></details>
-    <details><summary>Can I test WordPress plugins on different PHP versions?</summary><p>Yes. WP Lab currently supports PHP 8.2, 8.3 and 8.4 switching while preserving WordPress data.</p></details>
-    <details><summary>Can I use WP Lab for WooCommerce development?</summary><p>Yes. WP Lab includes WooCommerce testing helpers, demo data, local email capture, test shipping and a dummy payment gateway.</p></details>
-    <details><summary>Does WP Lab work on Ubuntu and Linux Mint?</summary><p>WP Lab is Linux-focused and is developed around Ubuntu/Linux Mint style systems with Docker Engine and Docker Compose.</p></details>
-  </div></section>
+<section class="section" id="faq">
+  <div class="shell faq">
+    <div><div class="eyebrow">FAQ</div><h2>Useful things to know.</h2></div>
+    <div class="faq-list">
+      <details open><summary>What is WP Lab?</summary><p>WP Lab is a local WordPress and WooCommerce development environment for Linux that manages isolated Docker sandboxes from one desktop interface.</p></details>
+      <details><summary>Can WP Lab run multiple local WordPress sites?</summary><p>Yes. Every instance has separate WordPress data, database data, ports, PHP settings, logs, and a Mailpit inbox.</p></details>
+      <details><summary>Can I test themes and plugins on different PHP versions?</summary><p>Yes. WP Lab currently supports PHP 8.2, 8.3, and 8.4 while preserving the sandbox's WordPress data.</p></details>
+      <details><summary>Can I use WP Lab for WooCommerce development?</summary><p>Yes. WP Lab includes WooCommerce testing helpers, demo data, local email capture, test shipping, and dummy payment outcomes.</p></details>
+      <details><summary>Does it work on Ubuntu and Linux Mint?</summary><p>That is the environment WP Lab is currently focused on. It uses Docker Engine and Docker Compose underneath.</p></details>
+      <details><summary>Can I share a local site with a client?</summary><p>Yes. WP Lab can create a temporary HTTPS preview using Cloudflare Tunnel and stop it again from the app.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="final">
+  <div class="shell">
+    <div class="finalbox">
+      <h2>A cleaner way to keep WordPress testing disposable.</h2>
+      <p>Open source, Linux-focused, and built for developers who would rather test the work than keep rebuilding the environment.</p>
+      <div class="hero-actions">
+        <a class="btn" href="https://github.com/haseebgb92/WP-Lab/releases/download/v0.8.0/WP-Lab-0.8.0-amd64.deb">Download WP Lab v0.8.0</a>
+        <a class="btn" href="https://github.com/haseebgb92/WP-Lab">View source</a>
+      </div>
+    </div>
+  </div>
+</section>
 </main>
 
-<footer><div class="wrap">WP Lab is a local development tool by Advertpreneur. Source, releases and issues are available on <a href="https://github.com/haseebgb92/WP-Lab">GitHub</a>.</div></footer>
+<footer>
+  <div class="shell footerrow">
+    <div>WP Lab · Built by Advertpreneur</div>
+    <div class="footerlinks"><a href="https://github.com/haseebgb92/WP-Lab">GitHub</a><a href="https://github.com/haseebgb92/WP-Lab/releases">Releases</a><a href="https://github.com/haseebgb92/WP-Lab/issues">Issues</a></div>
+  </div>
+</footer>
 </body>
 </html>
